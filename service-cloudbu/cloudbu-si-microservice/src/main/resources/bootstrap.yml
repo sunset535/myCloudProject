@@ -1,0 +1,14 @@
+server:
+  port: 3100
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: si-microservice-service
+  cloud:
+    config:
+      label: cloudbu-si-microservice
+      discovery:
+        enabled: true
+        service-id: cloudbu-config-server

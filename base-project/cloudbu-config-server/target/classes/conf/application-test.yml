@@ -1,0 +1,50 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.60.115:8066/retail2C?useSSL=false&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+
+# 云平台REST服务配置
+RETAIL-REST-SERVICE:
+  ribbon:
+    NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+    listOfServers: http://192.168.60.241:8202/
+    
+# 商品中心REST服务配置
+sku-microservice:
+  ribbon:
+    NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+    listOfServers: http://192.168.60.241:6111/
+    
+# 商品中心 品牌商REST服务配置
+user-service:
+  ribbon:
+    NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+    listOfServers: http://192.168.60.241:7777/
+
+# 缓存配置
+redis:
+  cluster:
+    jedisClusterNode: 192.168.60.241:47000,192.168.60.241:47001,192.168.60.241:47002,192.168.60.241:47003,192.168.60.241:47004,192.168.60.241:47005
+    maxTotal: 500
+    maxIdle: 5000
+    maxWaitMillis: 10000
+    testOnBorrow: true
+
+# 消息队列配置
+mq:
+  normal:
+    address: 192.168.60.250:5672
+    username: guest
+    password: guest
+    virtual-host: huistore
+  zipkin:
+    address: 192.168.60.250:5672
+    username: guest
+    password: guest
+    virtual-host: zipkin
+
+#eureka注册中心首页默认跳转到各服务的swagger-ui页面
+eureka:
+  instance:
+    status-page-url: http://192.168.60.250:${server.port}/swagger-ui.html

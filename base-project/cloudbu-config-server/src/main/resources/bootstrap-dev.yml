@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: native,dev
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/conf/
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
