@@ -1,9 +1,0 @@
-com\cloudbu\common\feign\si\UserServiceFallback.class
-com\cloudbu\common\domain\util\ResponseResult.class
-com\cloudbu\common\feign\si\UserServiceClient.class
-com\cloudbu\common\domain\util\PagedList.class
-com\cloudbu\common\constant\ServiceName.class
-com\cloudbu\common\domain\si\model\User.class
-com\cloudbu\common\exception\BusinessException.class
-com\cloudbu\common\constant\BusinessCode.class
-com\cloudbu\common\i18n\MessageHelper.class

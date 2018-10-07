@@ -1,6 +1,0 @@
-com\cloudbu\si\microservice\service\UserService.class
-com\cloudbu\si\microservice\controller\UserController.class
-com\cloudbu\si\microservice\dao\UserDao.class
-com\cloudbu\si\microservice\SiMicroserviceApplication.class
-com\cloudbu\si\microservice\service\impl\UserServiceImpl.class
-com\cloudbu\si\microservice\config\Swagger2.class
