@@ -19,6 +19,7 @@ public class TestController {
 	
 	@PostMapping("/save")
 	public ResponseResult<User> saveUser(@RequestBody User user){
+		
 		return userServiceClient.saveUser(user);
 	}
 }
