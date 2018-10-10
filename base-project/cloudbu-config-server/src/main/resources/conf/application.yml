@@ -13,7 +13,12 @@ spring:
 #      type: rabbit
 #  zipkin:
 #    base-url: http://localhost:8080
+  kafka:
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+        
   zipkin:
+    kafka: true
     sender:
       type: kafka
   cloud:
@@ -22,6 +27,7 @@ spring:
         binder:
           brokers: localhost:9092,localhost:9093,localhost:9094
           zkNodes: localhost:2181,localhost:2182,localhost:2183
+        
           
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

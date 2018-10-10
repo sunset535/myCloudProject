@@ -1,5 +1,7 @@
 package com.cloudbu.si.manage.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,8 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/mag/user")
 public class UserManagerController {
 	
+	private static final Logger log = LoggerFactory.getLogger(UserManagerController.class);
+	
 	@Autowired(required=true)
 	private UserServiceClient userServiceClient;
 	
@@ -29,6 +33,7 @@ public class UserManagerController {
 	@ApiResponses({ @ApiResponse(code = BusinessCode.CODE_SI_2001, message = "服务器内部错误,插入用户信息失败"),
 			@ApiResponse(code = BusinessCode.CODE_OK, message = "操作成功") })
 	public ResponseResult<User> getCompanyInfoByPage(@RequestBody User user) {
+		log.info("user object:"+user.toString());
 		return userServiceClient.saveUser(user);
 	}
 }

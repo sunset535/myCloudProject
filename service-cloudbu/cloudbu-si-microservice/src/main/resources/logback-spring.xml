@@ -4,8 +4,9 @@
 
     <property name="app.log" value="cloudbu-si-microservice-service"/>
     <property name="LOG_HOME" value="/opt/logs/${app.log}"/>
-    <property name="PATTERN" value="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%c{12}:%L] %msg%n"/>
-
+    <!-- property name="PATTERN" value="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%c{12}:%L] %msg%n"/ -->
+	<property name="PATTERN" value="%5p [%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%c{12}:%L] %msg%n"/>
+	
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${PATTERN}</pattern>

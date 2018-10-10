@@ -26,16 +26,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.i18n.LocaleContextResolver;
 
-import com.winhxd.b2c.common.cache.Cache;
-import com.winhxd.b2c.common.constant.AppConstant;
-import com.winhxd.b2c.common.constant.BusinessCode;
-import com.winhxd.b2c.common.constant.CacheName;
-import com.winhxd.b2c.common.context.CustomerUser;
-import com.winhxd.b2c.common.context.StoreUser;
-import com.winhxd.b2c.common.context.support.ContextHelper;
-import com.winhxd.b2c.common.context.version.VersionContext;
-import com.winhxd.b2c.common.domain.ResponseResult;
-import com.winhxd.b2c.common.util.JsonUtil;
+import com.cloudbu.common.cache.Cache;
+import com.cloudbu.common.constant.AppConstant;
+import com.cloudbu.common.constant.BusinessCode;
+import com.cloudbu.common.constant.CacheName;
+import com.cloudbu.common.context.support.ContextHelper;
+import com.cloudbu.common.domain.util.ResponseResult;
+import com.cloudbu.common.util.JsonUtil;
 
 import brave.Span;
 import brave.Tracer;
@@ -46,8 +43,8 @@ import reactor.core.publisher.Mono;
 public class GatewayFilter implements GlobalFilter, Ordered {
     private static final Logger logger = LoggerFactory.getLogger(GatewayFilter.class);
 
-    @Autowired
-    private Cache cache;
+//    @Autowired
+//    private Cache cache;
     @Autowired
     private Tracer tracer;
 
@@ -59,7 +56,7 @@ public class GatewayFilter implements GlobalFilter, Ordered {
         String path = request.getURI().getPath();
         Matcher matcher = ContextHelper.PATTERN_API_PATH.matcher(path);
         if (!matcher.matches()) {
-            return error(exchange, response, BusinessCode.CODE_1009);
+            return error(exchange, response, BusinessCode.CODE_1001);
         }
         MediaType contentType = request.getHeaders().getContentType();
         String pathTag = matcher.group(2);
@@ -93,12 +90,13 @@ public class GatewayFilter implements GlobalFilter, Ordered {
                 case AppConstant.GRP_CUSTOMER:
                     header = ContextHelper.HEADER_USER_CUSTOMER;
                     key = CacheName.CUSTOMER_USER_INFO_TOKEN + token;
-                    tokenJson = cache.get(key);
+                    //tokenJson = cache.get(key);
+                    tokenJson="{\"abc\":\"def\"}";
                     break;
                 case AppConstant.GRP_STORE:
                     header = ContextHelper.HEADER_USER_STORE;
                     key = CacheName.STORE_USER_INFO_TOKEN + token;
-                    tokenJson = cache.get(key);
+                    tokenJson="{\"abc\":\"def\"}";
                     break;
                 default:
                     return error(exchange, response, BusinessCode.CODE_1002);
@@ -107,20 +105,7 @@ public class GatewayFilter implements GlobalFilter, Ordered {
                 return error(exchange, response, BusinessCode.CODE_1002);
             }
             ServerHttpRequest.Builder mutateRequest = request.mutate();
-            String msVer = request.getHeaders().getFirst(VersionContext.HEADER_NAME);
-            if (grp.equals(AppConstant.GRP_CUSTOMER)) {
-                CustomerUser customerUser = ContextHelper.getHeaderObject(tokenJson, CustomerUser.class);
-                currentSpan.tag(ContextHelper.TRACER_API_CUSTOMER, customerUser.getCustomerId().toString());
-                if (StringUtils.isBlank(msVer) && StringUtils.isNotBlank(customerUser.getMsVer())) {
-                    mutateRequest.header(VersionContext.HEADER_NAME, customerUser.getMsVer());
-                }
-            } else {
-                StoreUser storeUser = ContextHelper.getHeaderObject(tokenJson, StoreUser.class);
-                currentSpan.tag(ContextHelper.TRACER_API_STORE, storeUser.getStoreCustomerId().toString());
-                if (StringUtils.isBlank(msVer) && StringUtils.isNotBlank(storeUser.getMsVer())) {
-                    mutateRequest.header(VersionContext.HEADER_NAME, storeUser.getMsVer());
-                }
-            }
+            currentSpan.tag(ContextHelper.TRACER_API_CUSTOMER, "abcdefg");
             requestBuilder = mutateRequest.header(header, ContextHelper.encode(tokenJson));
         }
 
