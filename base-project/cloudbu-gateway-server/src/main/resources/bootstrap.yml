@@ -1,0 +1,14 @@
+server:
+  port: 3000
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: cloudbu-gateway-server
+  cloud:
+    config:
+      label: gateway
+      discovery:
+        enabled: true
+        service-id: cloudbu-config-server
